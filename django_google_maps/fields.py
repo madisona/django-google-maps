@@ -1,6 +1,7 @@
 from django.db import models
 from django.core import exceptions
 
+__all__ = ('AddressField', 'GeoLocationField')
 
 def typename(obj):
     """Returns the type of obj as a string. More descriptive and specific than
@@ -92,7 +93,7 @@ class GeoLocationField(models.CharField):
 
     def get_prep_value(self, value):
         """prepare the value for database query"""
-        return str(value)
+        return unicode(value)
 
     def get_prep_lookup(self, lookup_type, value):
         # We only handle 'exact' and 'in'. All others are errors.
