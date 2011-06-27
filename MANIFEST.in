@@ -1,0 +1,6 @@
+
+include LICENSE
+include README.md
+include MANIFEST.in
+
+recursive-include django_google_maps *.css *.js
