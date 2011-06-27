@@ -31,6 +31,7 @@ setup(
     long_description=LONG_DESCRIPTION,
     url="https://github.com/madisona/django-google-maps",
     packages=("django_google_maps",),
+    include_package_data=True,
     install_requires=REQUIREMENTS,
     classifiers=CLASSIFIERS,
     zip_safe=False,
