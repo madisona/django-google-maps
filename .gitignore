@@ -1,0 +1,8 @@
+.idea/*
+sample_db
+build/*
+*.egg-info
+dist
+
+*.pyc
+*.pyo
