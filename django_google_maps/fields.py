@@ -93,3 +93,10 @@ class GeoLocationField(models.CharField):
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
         return self.get_db_prep_value(value)
+
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules([], ["^django_google_maps\.fields\.GeoLocationField"])
+    add_introspection_rules([], ["^django_google_maps\.fields\.AddressField"])
+except ImportError:
+    pass
