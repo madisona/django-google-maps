@@ -57,6 +57,11 @@ class GeoPt(object):
             return "%s,%s" % (self.lat, self.lon)
         return ''
 
+    def __eq__(self, other):
+        if isinstance(other, GeoPt):
+            return bool(self.lat == other.lat and self.lon == other.lon)
+        return False
+
     def __len__(self):
         return len(self.__unicode__())
 

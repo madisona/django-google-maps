@@ -17,6 +17,26 @@ class GeoPtFieldTests(test.TestCase):
         geo_pt = fields.GeoPt(lat_lon_string)
         self.assertEqual(lat_lon_string, unicode(geo_pt))
 
+    def test_two_GeoPts_with_same_lat_lon_should_be_equal(self):
+        geo_pt_1 = fields.GeoPt("15.001,32.001")
+        geo_pt_2 = fields.GeoPt("15.001,32.001")
+        self.assertEqual(geo_pt_1, geo_pt_2)
+
+    def test_two_GeoPts_with_different_lat_should_not_be_equal(self):
+        geo_pt_1 = fields.GeoPt("15.001,32.001")
+        geo_pt_2 = fields.GeoPt("20.001,32.001")
+        self.assertNotEqual(geo_pt_1, geo_pt_2)
+
+    def test_two_GeoPts_with_different_lon_should_not_be_equal(self):
+        geo_pt_1 = fields.GeoPt("15.001,32.001")
+        geo_pt_2 = fields.GeoPt("15.001,62.001")
+        self.assertNotEqual(geo_pt_1, geo_pt_2)
+
+    def test_is_not_equal_when_comparison_is_not_GeoPt_object(self):
+        geo_pt_1 = fields.GeoPt("15.001,32.001")
+        geo_pt_2 = "15.001,32.001"
+        self.assertNotEqual(geo_pt_1, geo_pt_2)
+
     def test_allows_GeoPt_instantiated_with_empty_string(self):
         geo_pt = fields.GeoPt('')
         self.assertEqual(None, geo_pt.lat)
