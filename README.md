@@ -1,4 +1,3 @@
-
 Django-google-maps is a simple application that provides the basic
 hooks into google maps V3 api for use in django models from django
 version 1.3.
@@ -18,7 +17,7 @@ USAGE:
     from django_google_maps import fields as map_fields
     
     class Rental(models.Model):
-        address = map_fields.AddressField(max_lenght=200)
+        address = map_fields.AddressField(max_length=200)
         geolocation = map_fields.GeoLocationField(max_length=100)    
   </code></pre>
 - in the `admin.py` include the following as a formfield_override
