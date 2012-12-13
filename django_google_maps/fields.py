@@ -1,4 +1,3 @@
-
 # The core of this module was adapted from Google AppEngine's
 # GeoPt field, so I've included their copyright and license.
 #
@@ -117,6 +116,8 @@ class GeoLocationField(models.CharField):
 
     def get_prep_value(self, value):
         """prepare the value for database query"""
+        if value is None:
+            return None
         return unicode(value)
 
     def get_prep_lookup(self, lookup_type, value):
@@ -130,7 +131,7 @@ class GeoLocationField(models.CharField):
 
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
-        return self.get_db_prep_value(value)
+        return self.get_prep_value(value)
 
 try:
     from south.modelsinspector import add_introspection_rules
