@@ -53,6 +53,12 @@ function googleMapAdmin() {
             }
 
             $("#id_address").change(function() {self.codeAddress();});
+	    $("#id_address").keypress(function (ev) {
+		if (ev.which == 13) {
+		    ev.preventDefault();
+		    $("#id_address").change();
+		}
+	    });
         },
 
         getExistingLocation: function() {
