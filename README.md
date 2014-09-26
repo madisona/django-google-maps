@@ -37,8 +37,8 @@ USAGE:
           }
   </code></pre>
 - in the `settings.py` file, address field type can be defined
--- default: Fully formated address wil be displayed
--- simple: Only street name and number will be displayed
+  - default: Fully formated address wil be displayed
+  - simple: Only street name and number will be displayed
   <pre><code>
       DJANGO_GOOGLE_MAPS = {
         'ADDRESS_TYPE': 'default'
