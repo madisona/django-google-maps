@@ -18,6 +18,11 @@ USAGE:
     
     class Rental(models.Model):
         address = map_fields.AddressField(max_length=200)
+        city = map_fields.CityField(max_length=200)
+        postalcode = map_fields.PostalCodeField(default=0)
+        admin_area_1 = map_fields.AdminArea1Field(max_length=200)
+        admin_area_2 = map_fields.AdminArea2Field(max_length=200)
+        country = map_fields.CountryField(max_length=200)
         geolocation = map_fields.GeoLocationField(max_length=100)    
   </code></pre>
 - in the `admin.py` include the following as a formfield_override
@@ -30,6 +35,14 @@ USAGE:
           formfield_overrides = {
               map_fields.AddressField: {'widget': map_widgets.GoogleMapsAddressWidget},    
           }
+  </code></pre>
+- in the `settings.py` file, address field type can be defined
+  - default: Fully formated address wil be displayed
+  - simple: Only street name and number will be displayed
+  <pre><code>
+      DJANGO_GOOGLE_MAPS = {
+        'ADDRESS_TYPE': 'default'
+      }
   </code></pre>
   
 That should be all you need to get started. If you're not using Django 1.3
