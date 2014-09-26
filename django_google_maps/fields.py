@@ -89,6 +89,22 @@ class GeoPt(object):
 class AddressField(models.CharField):
     pass
 
+class CityField(models.CharField):
+    pass
+
+class PostalCodeField(models.IntegerField):
+    pass
+
+class AdminArea1Field(models.CharField):
+    pass
+
+class AdminArea2Field(models.CharField):
+    pass
+
+class CountryField(models.CharField):
+    pass
+
+
 class GeoLocationField(models.CharField):
     """
     A geographical point, specified by floating-point latitude and longitude

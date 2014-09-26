@@ -20,7 +20,12 @@ class GoogleMapsAddressWidget(widgets.TextInput):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
+
+        addr_type = 'default'
+        if (settings.DJANGO_GOOGLE_MAPS['ADDRESS_TYPE'] and settings.DJANGO_GOOGLE_MAPS['ADDRESS_TYPE'] in ['default', 'simple']):
+            addr_type = settings.DJANGO_GOOGLE_MAPS['ADDRESS_TYPE']
+
         if value != '':
             # Only add the 'value' attribute if a value is non-empty.
             final_attrs['value'] = force_unicode(self._format_value(value))
-        return mark_safe(u'<input%s /><div class="map_canvas_wrapper"><div id="map_canvas"></div></div>' % flatatt(final_attrs))
+        return mark_safe(u'<input%s data-addrtype="%s"/><div class="map_canvas_wrapper"><div id="map_canvas"></div></div>' % (flatatt(final_attrs), addr_type))
