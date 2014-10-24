@@ -110,7 +110,9 @@ function googleMapAdmin() {
         },
 
         updateGeolocation: function(latlng) {
-            $("#id_geolocation").val(latlng.lat() + "," + latlng.lng());
+            $("#id_geolocation")
+                .val(latlng.lat() + "," + latlng.lng())
+                .trigger('change');
         }
     }
 
