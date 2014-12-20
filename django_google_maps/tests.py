@@ -5,6 +5,7 @@ from django.core import exceptions
 
 from django_google_maps import fields
 
+
 class GeoPtFieldTests(test.TestCase):
 
     def test_sets_lat_lon_on_initialization(self):
