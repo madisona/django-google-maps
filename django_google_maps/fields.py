@@ -61,10 +61,9 @@ class GeoPt(object):
     def __eq__(self, other):
         if isinstance(other, GeoPt):
             return bool(self.lat == other.lat and self.lon == other.lon)
-        return False
 
     def __len__(self):
-        return len(self.__unicode__())
+        return len(unicode(self))
 
     def _split_geo_point(self, geo_point):
         """splits the geo point into lat and lon"""

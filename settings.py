@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'django_google_maps',
     'sample',
     'django_nose',
+    'django_google_maps.tests.test_app'
 )
 
 # A sample logging configuration. The only tangible logging
