@@ -21,6 +21,7 @@ from django.core import exceptions
 
 __all__ = ('AddressField', 'GeoLocationField')
 
+
 def typename(obj):
     """Returns the type of obj as a string. More descriptive and specific than
     type(obj), and safe for any object, unlike __class__."""
@@ -28,6 +29,7 @@ def typename(obj):
         return getattr(obj, '__class__').__name__
     else:
         return type(obj).__name__
+
 
 class GeoPt(object):
     """A geographical point."""
@@ -59,35 +61,34 @@ class GeoPt(object):
     def __eq__(self, other):
         if isinstance(other, GeoPt):
             return bool(self.lat == other.lat and self.lon == other.lon)
-        return False
 
     def __len__(self):
-        return len(self.__unicode__())
+        return len(unicode(self))
 
     def _split_geo_point(self, geo_point):
         """splits the geo point into lat and lon"""
         try:
             return geo_point.split(',')
         except (AttributeError, ValueError):
-            raise exceptions.ValidationError(
-                'Expected a "lat,long" formatted string; received %s (a %s).' %
-            (geo_point, typename(geo_point)))
+            m = 'Expected a "lat,long" formatted string; received %s (a %s).'
+            raise exceptions.ValidationError(m % (geo_point, typename(geo_point)))
 
     def _validate_geo_range(self, geo_part, range_val):
         try:
             geo_part = float(geo_part)
             if abs(geo_part) > range_val:
-                raise exceptions.ValidationError(
-                'Must be between -%s and %s; received %s' % (range_val, range_val, geo_part)
-            )
+                m = 'Must be between -%s and %s; received %s'
+                raise exceptions.ValidationError(m % (range_val, range_val, geo_part))
         except (TypeError, ValueError):
             raise exceptions.ValidationError(
                 'Expected float, received %s (a %s).' % (geo_part, typename(geo_part))
             )
         return geo_part
 
+
 class AddressField(models.CharField):
     pass
+
 
 class GeoLocationField(models.CharField):
     """
@@ -132,6 +133,7 @@ class GeoLocationField(models.CharField):
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
         return self.get_prep_value(value)
+
 
 try:
     from south.modelsinspector import add_introspection_rules

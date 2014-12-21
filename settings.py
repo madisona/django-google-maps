@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'django_google_maps',
     'sample',
+    'django_google_maps.tests.test_app'
 )
 
 # A sample logging configuration. The only tangible logging

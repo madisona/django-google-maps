@@ -3,6 +3,7 @@ sample_db
 build/*
 *.egg-info
 dist
+.coverage
 
 *.pyc
 *.pyo

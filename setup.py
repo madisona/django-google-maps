@@ -2,12 +2,6 @@
 import os
 from setuptools import setup
 
-from django_google_maps import VERSION
-
-REQUIREMENTS = [
-    'django',
-    'mock',
-]
 README = os.path.join(os.path.dirname(__file__), 'README.md')
 LONG_DESCRIPTION = open(README, 'r').read()
 CLASSIFIERS = [
@@ -24,7 +18,7 @@ CLASSIFIERS = [
 
 setup(
     name="django-google-maps",
-    version=VERSION,
+    version='0.2.3',
     author="Aaron Madison",
     author_email="aaron.l.madison@gmail.com",
     description="Plugs google maps V3 api into Django admin.",
@@ -32,7 +26,7 @@ setup(
     url="https://github.com/madisona/django-google-maps",
     packages=("django_google_maps",),
     include_package_data=True,
-    install_requires=REQUIREMENTS,
+    install_requires=file('requirements/requirements.txt').read().split('\n'),
     classifiers=CLASSIFIERS,
     zip_safe=False,
 )
