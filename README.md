@@ -8,6 +8,9 @@ on the map. If the location is not 100% correct, the user can
 drag the marker to the correct spot and the geo coordinates will 
 update.
 
+### Status
+[![Build Status](https://travis-ci.org/madisona/django-google-maps.png)](https://travis-ci.org/madisona/django-google-maps)
+
 USAGE:
 ------
 - include the `django_google_maps` app in your `settings.py`
