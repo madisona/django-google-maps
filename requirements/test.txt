@@ -1,5 +1,4 @@
 -r requirements.txt
-django-nose
 flake8
 coverage
 south

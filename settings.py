@@ -121,7 +121,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'django_google_maps',
     'sample',
-    'django_nose',
     'django_google_maps.tests.test_app'
 )
 
@@ -147,4 +146,3 @@ LOGGING = {
         },
     }
 }
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
