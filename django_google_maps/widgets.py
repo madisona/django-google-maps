@@ -1,32 +1,39 @@
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.forms import widgets
-from django.forms.utils import flatatt
-from django.utils.encoding import force_text
-from django.utils.safestring import mark_safe
 
 
-__all__ = ('GoogleMapsAddressWidget', )
+__all__ = ('GoogleMapsAddressWidget', 'GoogleMapsAddressInputWidget', 'GoogleMapsAddressTextareaWidget')
 
 
-class GoogleMapsAddressWidget(widgets.TextInput):
-    "a widget that will place a google map right after the #id_address field"
+class GoogleMapsWidgetMixin(object):
+    "Renders Google map after the field"
 
     class Media:
-        css = {'all': (settings.STATIC_URL + 'django_google_maps/css/google-maps-admin.css',)}
+        css = {'all': ('django_google_maps/css/google-maps-admin.css', )}
         js = (
             'https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js',
-            'https://maps.google.com/maps/api/js?sensor=false',
-            settings.STATIC_URL + 'django_google_maps/js/google-maps-admin.js',
+            'https://maps.google.com/maps/api/js',
+            'django_google_maps/js/google-maps-admin.js',
         )
 
-    def render(self, name, value, attrs=None):
-        if value is None:
-            value = ''
-        final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
-        if value != '':
-            # Only add the 'value' attribute if a value is non-empty.
-            final_attrs['value'] = force_text(self._format_value(value))
-        html = '<input%s /><div class="map_canvas_wrapper"><div id="map_canvas"></div></div>'
-        return mark_safe(html % flatatt(final_attrs))
+    def _append_wrapper(self, to):
+        return to + '<div class="map_canvas_wrapper"><div id="map_canvas"></div></div>'
+
+
+class GoogleMapsAddressInputWidget(widgets.TextInput, GoogleMapsWidgetMixin):
+
+    def render(self, *args, **kwargs):
+        result = super(GoogleMapsAddressInputWidget, self).render(*args, **kwargs)
+        return self._append_wrapper(result)
+
+
+class GoogleMapsAddressTextareaWidget(widgets.Textarea, GoogleMapsWidgetMixin):
+
+    def render(self, *args, **kwargs):
+        result = super(GoogleMapsAddressTextareaWidget, self).render(*args, **kwargs)
+        return self._append_wrapper(result)
+
+
+# backwards compatibility
+GoogleMapsAddressWidget = GoogleMapsAddressInputWidget
