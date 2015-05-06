@@ -1,13 +1,22 @@
-from django import test
-from django_google_maps.fields import typename
+from __future__ import unicode_literals
+
+from unittest import TestCase
+from ..fields import typename
+from django.utils import six
 
 
-class TypeNameTests(test.TestCase):
+class TypeNameTests(TestCase):
 
     def test_simple_type_returns_type_name_as_string(self):
-        self.assertEqual("str", typename("x"))
+        self.assertEqual(six.text_type.__name__, typename("x"))
 
     def test_class_object(self):
         class X:
             pass
-        self.assertEqual("classobj", typename(X))
+
+        if six.PY2:
+            expected_type = 'classobj'
+        else:
+            expected_type = 'type'
+
+        self.assertEqual(expected_type, typename(X))

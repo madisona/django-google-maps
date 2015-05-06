@@ -5,5 +5,9 @@ build/*
 dist
 .coverage
 
+__pycache__/
 *.pyc
 *.pyo
+
+.tox/
+.eggs/

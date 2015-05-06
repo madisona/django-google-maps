@@ -1,8 +1,10 @@
-from django import test
-from django_google_maps.widgets import GoogleMapsAddressWidget
+from __future__ import unicode_literals
+
+from django.test import TestCase
+from ..widgets import GoogleMapsAddressWidget
 
 
-class WidgetTests(test.TestCase):
+class WidgetTests(TestCase):
 
     def test_render_returns_xxxxxxx(self):
         widget = GoogleMapsAddressWidget()

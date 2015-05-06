@@ -1,5 +1,6 @@
 -r requirements.txt
-flake8
+
+tox
+django-nose
 coverage
-south
-mock
+flake8
