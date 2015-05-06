@@ -1,11 +1,19 @@
 #!/usr/bin/env python
+import ast
+import re
 from setuptools import setup
-from django_google_maps import __version__
+
+
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+
+with open('django_google_maps/__init__.py', 'rb') as f:
+    version = str(ast.literal_eval(_version_re.search(
+        f.read().decode('utf-8')).group(1)))
 
 
 setup(
     name='django-google-maps',
-    version=__version__,
+    version=version,
     author='Aaron Madison',
     author_email='aaron.l.madison@gmail.com',
     description='Plugs google maps V3 api into Django admin.',
