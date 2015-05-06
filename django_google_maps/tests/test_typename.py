@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from unittest import TestCase
 from ..fields import typename
 from django.utils import six
