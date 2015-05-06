@@ -8,7 +8,7 @@ from django.utils import six
 class TypeNameTests(TestCase):
 
     def test_simple_type_returns_type_name_as_string(self):
-        self.assertEqual("str", typename("x"))
+        self.assertEqual(six.text_type.__name__, typename("x"))
 
     def test_class_object(self):
         class X:
