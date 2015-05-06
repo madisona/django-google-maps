@@ -114,7 +114,7 @@ function googleMapAdmin() {
                 .val(latlng.lat() + "," + latlng.lng())
                 .trigger('change');
         }
-    }
+    };
 
     return self;
 }
