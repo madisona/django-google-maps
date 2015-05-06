@@ -1,8 +1,8 @@
-from django import test
-from django_google_maps.fields import typename
+from unittest import TestCase
+from ..fields import typename
 
 
-class TypeNameTests(test.TestCase):
+class TypeNameTests(TestCase):
 
     def test_simple_type_returns_type_name_as_string(self):
         self.assertEqual("str", typename("x"))
