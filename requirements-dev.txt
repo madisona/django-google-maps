@@ -1,0 +1,3 @@
+tox
+django-nose
+coverage
