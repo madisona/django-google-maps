@@ -16,8 +16,8 @@
 # limitations under the License.
 #
 
-from django.db import models
-from django.core import exceptions
+from django.core.exceptions import ValidationError
+from django.db.models import CharField, SubfieldBase
 from django.utils import six
 from django.utils.encoding import force_text, python_2_unicode_compatible
 
@@ -75,26 +75,26 @@ class GeoPt(object):
             return geo_point.split(',')
         except (AttributeError, ValueError):
             m = 'Expected a "lat,long" formatted string; received %s (a %s).'
-            raise exceptions.ValidationError(m % (geo_point, typename(geo_point)))
+            raise ValidationError(m % (geo_point, typename(geo_point)))
 
     def _validate_geo_range(self, geo_part, range_val):
         try:
             geo_part = float(geo_part)
             if abs(geo_part) > range_val:
                 m = 'Must be between -%s and %s; received %s'
-                raise exceptions.ValidationError(m % (range_val, range_val, geo_part))
+                raise ValidationError(m % (range_val, range_val, geo_part))
         except (TypeError, ValueError):
-            raise exceptions.ValidationError(
+            raise ValidationError(
                 'Expected float, received %s (a %s).' % (geo_part, typename(geo_part))
             )
         return geo_part
 
 
-class AddressField(models.CharField):
+class AddressField(CharField):
     pass
 
 
-class GeoLocationField(six.with_metaclass(models.SubfieldBase, models.CharField)):
+class GeoLocationField(six.with_metaclass(SubfieldBase, CharField)):
     """
     A geographical point, specified by floating-point latitude and longitude
     coordinates. Often used to integrate with mapping sites like Google Maps.
