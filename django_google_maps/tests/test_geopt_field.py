@@ -1,5 +1,7 @@
 from django.core import exceptions
 from django.test import TestCase
+from django.utils import six
+
 from ..fields import GeoPt
 
 
@@ -13,7 +15,7 @@ class GeoPtFieldTests(TestCase):
     def test_uses_lat_comma_lon_as_unicode_representation(self):
         lat_lon_string = "15.001,32.001"
         geo_pt = GeoPt(lat_lon_string)
-        self.assertEqual(lat_lon_string, unicode(geo_pt))
+        self.assertEqual(lat_lon_string, six.text_type(geo_pt))
 
     def test_two_GeoPts_with_same_lat_lon_should_be_equal(self):
         geo_pt_1 = GeoPt("15.001,32.001")
@@ -42,12 +44,12 @@ class GeoPtFieldTests(TestCase):
 
     def test_uses_empty_string_as_unicode_representation_for_empty_GeoPt(self):
         geo_pt = GeoPt('')
-        self.assertEqual('', unicode(geo_pt))
+        self.assertEqual('', six.text_type(geo_pt))
 
     def test_splits_geo_point_on_comma(self):
         pt = GeoPt("15.001,32.001")
-        self.assertEqual('15.001', str(pt.lat))
-        self.assertEqual('32.001', str(pt.lon))
+        self.assertEqual('15.001', six.text_type(pt.lat))
+        self.assertEqual('32.001', six.text_type(pt.lon))
 
     def test_raises_error_when_attribute_error_on_split(self):
         class Fake(object):

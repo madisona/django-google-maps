@@ -1,5 +1,6 @@
 from unittest import TestCase
 from ..fields import typename
+from django.utils import six
 
 
 class TypeNameTests(TestCase):
@@ -10,4 +11,10 @@ class TypeNameTests(TestCase):
     def test_class_object(self):
         class X:
             pass
-        self.assertEqual("classobj", typename(X))
+
+        if six.PY2:
+            expected_type = 'classobj'
+        else:
+            expected_type = 'type'
+
+        self.assertEqual(expected_type, typename(X))
