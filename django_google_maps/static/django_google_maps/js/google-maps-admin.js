@@ -52,7 +52,7 @@ function googleMapAdmin() {
                 self.setMarker(latlng);
             }
 
-            $("#id_address").change(function() {self.codeAddress();});
+            $("#id_address").keyup(self.codeAddressDelay);
         },
 
         getExistingLocation: function() {
@@ -60,6 +60,12 @@ function googleMapAdmin() {
             if (geolocation) {
                 return geolocation.split(',');
             }
+        },
+
+        codeAddressDelay: function() {
+            clearTimeout($.data(this, 'timer'));
+            var wait = setTimeout(self.codeAddress, 600);
+            $(this).data('timer', wait);
         },
 
         codeAddress: function() {
