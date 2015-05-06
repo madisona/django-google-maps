@@ -1,7 +1,6 @@
 language: python
-python: "2.7"
-install: "pip install -r requirements/test.txt"
+install:
+  - pip install tox
 script:
-    - coverage run --source=django_google_maps manage.py test
-    - coverage report --show-missing
-    - flake8 django_google_maps --max-line-length=120 --max-complexity=4
+  - tox
+  - flake8
