@@ -3,7 +3,10 @@ from django.conf import settings
 from django.forms import widgets
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
-from django.forms.utils import flatatt
+try:
+    from django.forms.utils import flatatt
+except ImportError:
+    from django.forms.util import flatatt
 
 
 class GoogleMapsAddressWidget(widgets.TextInput):
