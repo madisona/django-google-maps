@@ -16,8 +16,10 @@
 # limitations under the License.
 #
 
-from django.db import models
 from django.core import exceptions
+from django.db import models
+from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils import six
 
 __all__ = ('AddressField', 'GeoLocationField')
 
@@ -31,6 +33,7 @@ def typename(obj):
         return type(obj).__name__
 
 
+@python_2_unicode_compatible
 class GeoPt(object):
     """A geographical point."""
 
@@ -53,7 +56,7 @@ class GeoPt(object):
         self.lat = self._validate_geo_range(lat, 90)
         self.lon = self._validate_geo_range(lon, 180)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.lat is not None and self.lon is not None:
             return "%s,%s" % (self.lat, self.lon)
         return ''
@@ -63,7 +66,7 @@ class GeoPt(object):
             return bool(self.lat == other.lat and self.lon == other.lon)
 
     def __len__(self):
-        return len(unicode(self))
+        return len(force_text(self))
 
     def _split_geo_point(self, geo_point):
         """splits the geo point into lat and lon"""
@@ -90,7 +93,7 @@ class AddressField(models.CharField):
     pass
 
 
-class GeoLocationField(models.CharField):
+class GeoLocationField(six.with_metaclass(models.SubfieldBase, models.CharField)):
     """
     A geographical point, specified by floating-point latitude and longitude
     coordinates. Often used to integrate with mapping sites like Google Maps.
@@ -104,7 +107,6 @@ class GeoLocationField(models.CharField):
     ranges [-90, 90] and [-180, 180], respectively.
     """
     description = "A geographical point, specified by floating-point latitude and longitude coordinates."
-    __metaclass__ = models.SubfieldBase
 
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 100
@@ -119,7 +121,7 @@ class GeoLocationField(models.CharField):
         """prepare the value for database query"""
         if value is None:
             return None
-        return unicode(value)
+        return force_text(value)
 
     def get_prep_lookup(self, lookup_type, value):
         # We only handle 'exact' and 'in'. All others are errors.

@@ -26,7 +26,7 @@ setup(
     url="https://github.com/madisona/django-google-maps",
     packages=("django_google_maps",),
     include_package_data=True,
-    install_requires=file('requirements/requirements.txt').read().split('\n'),
+    install_requires=open('requirements/requirements.txt').read().split('\n'),
     classifiers=CLASSIFIERS,
     zip_safe=False,
 )

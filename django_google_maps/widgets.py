@@ -1,7 +1,7 @@
 
 from django.conf import settings
 from django.forms import widgets
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 try:
     from django.forms.utils import flatatt
@@ -26,6 +26,6 @@ class GoogleMapsAddressWidget(widgets.TextInput):
         final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
         if value != '':
             # Only add the 'value' attribute if a value is non-empty.
-            final_attrs['value'] = force_unicode(self._format_value(value))
+            final_attrs['value'] = force_text(self._format_value(value))
         html = u'<input%s /><div class="map_canvas_wrapper"><div id="map_canvas"></div></div>'
         return mark_safe(html % flatatt(final_attrs))
