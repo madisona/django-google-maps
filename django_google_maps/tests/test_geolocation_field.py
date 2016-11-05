@@ -6,17 +6,20 @@ from django_google_maps.fields import GeoPt
 class GeoLocationFieldTests(test.TestCase):
 
     def test_getting_lat_lon_from_model_given_string(self):
-        sut = models.Person(geolocation='45,90')
+        sut_create = models.Person.objects.create(geolocation='45,90')
+        sut = models.Person.objects.get(pk=sut_create.pk)
         self.assertEqual(45, sut.geolocation.lat)
         self.assertEqual(90, sut.geolocation.lon)
 
     def test_getting_lat_lon_from_model_given_pt(self):
-        sut = models.Person(geolocation=GeoPt('45,90'))
+        sut_create = models.Person.objects.create(geolocation=GeoPt('45,90'))
+        sut = models.Person.objects.get(pk=sut_create.pk)
         self.assertEqual(45, sut.geolocation.lat)
         self.assertEqual(90, sut.geolocation.lon)
 
     def test_getting_lat_lon_from_model_in_db_given_string(self):
-        sut = models.Person.objects.create(geolocation='45,90')
+        sut_create = models.Person.objects.create(geolocation='45,90')
+        sut = models.Person.objects.get(pk=sut_create.pk)
         self.assertEqual(45, sut.geolocation.lat)
         self.assertEqual(90, sut.geolocation.lon)
 
@@ -29,10 +32,6 @@ class GeoLocationFieldTests(test.TestCase):
         sut = models.Person.objects.create(geolocation='45,90')
         result = models.Person.objects.get(geolocation__in=(GeoPt('45,90'),))
         self.assertEqual(result, sut)
-
-    def test_raises_typeerror_for_unsupported_lookup(self):
-        with self.assertRaises(TypeError):
-            models.Person.objects.get(geolocation__iexact=GeoPt('45,90'))
 
     def test_value_to_string_with_point(self):
         sut = models.Person.objects.create(geolocation=GeoPt('45,90'))
