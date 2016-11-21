@@ -20,8 +20,6 @@ from django.core import exceptions
 from django.db import models
 from django.utils.encoding import force_text, python_2_unicode_compatible
 
-import functools
-import six
 
 __all__ = ('AddressField', 'GeoLocationField')
 
@@ -33,12 +31,6 @@ def typename(obj):
         return getattr(obj, '__class__').__name__
     else:
         return type(obj).__name__
-
-
-if 'SubfieldBase' in models.__dict__.keys():
-    field_class = functools.partial(six.with_metaclass, models.SubfieldBase)
-else:
-    field_class = functools.partial(six.with_metaclass, type)
 
 
 @python_2_unicode_compatible
@@ -101,7 +93,7 @@ class AddressField(models.CharField):
     pass
 
 
-class GeoLocationField(field_class(models.CharField)):
+class GeoLocationField(models.CharField):
     """
     A geographical point, specified by floating-point latitude and longitude
     coordinates. Often used to integrate with mapping sites like Google Maps.
@@ -137,10 +129,3 @@ class GeoLocationField(field_class(models.CharField)):
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
         return self.get_prep_value(value)
-
-try:
-    from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^django_google_maps\.fields\.GeoLocationField"])
-    add_introspection_rules([], ["^django_google_maps\.fields\.AddressField"])
-except ImportError:
-    pass
