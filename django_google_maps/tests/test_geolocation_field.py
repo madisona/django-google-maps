@@ -4,7 +4,6 @@ from django_google_maps.fields import GeoPt
 
 
 class GeoLocationFieldTests(test.TestCase):
-
     def test_getting_lat_lon_from_model_given_string(self):
         sut_create = models.Person.objects.create(geolocation='45,90')
         sut = models.Person.objects.get(pk=sut_create.pk)
@@ -30,7 +29,7 @@ class GeoLocationFieldTests(test.TestCase):
 
     def test_in_match_query(self):
         sut = models.Person.objects.create(geolocation='45,90')
-        result = models.Person.objects.get(geolocation__in=(GeoPt('45,90'),))
+        result = models.Person.objects.get(geolocation__in=[GeoPt('45,90')])
         self.assertEqual(result, sut)
 
     def test_value_to_string_with_point(self):

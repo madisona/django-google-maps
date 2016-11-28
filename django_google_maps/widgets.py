@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.forms import widgets
 from django.utils.encoding import force_text
@@ -13,10 +12,14 @@ class GoogleMapsAddressWidget(widgets.TextInput):
     "a widget that will place a google map right after the #id_address field"
 
     class Media:
-        css = {'all': (settings.STATIC_URL + 'django_google_maps/css/google-maps-admin.css',)}
+        css = {
+            'all': (settings.STATIC_URL +
+                    'django_google_maps/css/google-maps-admin.css', )
+        }
         js = (
             'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js',
-            'https://maps.google.com/maps/api/js?key={}'.format(settings.GOOGLE_MAPS_API_KEY),
+            'https://maps.google.com/maps/api/js?key={}'.format(
+                settings.GOOGLE_MAPS_API_KEY),
             settings.STATIC_URL + 'django_google_maps/js/google-maps-admin.js',
         )
 

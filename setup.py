@@ -25,7 +25,7 @@ CLASSIFIERS = [
 
 setup(
     name="django-google-maps",
-    version='0.5.0',
+    version='0.6.0',
     author="Aaron Madison",
     author_email="aaron.l.madison@gmail.com",
     description="Plugs google maps V3 api into Django admin.",

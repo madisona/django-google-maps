@@ -1,6 +1,6 @@
 Django-google-maps is a simple application that provides the basic
 hooks into google maps V3 api for use in django models from django
-version 1.3.
+version 1.8+.
 
 I'm using this to allow someone from the admin panels to type a
 freeform address, have the address geocoded on change and plotted
@@ -36,9 +36,7 @@ USAGE:
           }
   </code></pre>
 
-That should be all you need to get started. If you're not using Django 1.3
-make sure that the static media is in a location that will be found and
-properly served. The assumed location is `settings.STATIC_URL + 'django_google_maps/js/google-maps-admin.js',`
+That should be all you need to get started.
 
 I also like to make the geolocation field readonly in the admin so a user
 (myself) doesn't accidentally change it to a nonsensical value. There is

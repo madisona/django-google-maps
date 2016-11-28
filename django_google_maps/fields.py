@@ -20,7 +20,6 @@ from django.core import exceptions
 from django.db import models
 from django.utils.encoding import force_text, python_2_unicode_compatible
 
-
 __all__ = ('AddressField', 'GeoLocationField')
 
 
@@ -74,18 +73,20 @@ class GeoPt(object):
             return geo_point.split(',')
         except (AttributeError, ValueError):
             m = 'Expected a "lat,long" formatted string; received %s (a %s).'
-            raise exceptions.ValidationError(m % (geo_point, typename(geo_point)))
+            raise exceptions.ValidationError(m %
+                                             (geo_point, typename(geo_point)))
 
     def _validate_geo_range(self, geo_part, range_val):
         try:
             geo_part = float(geo_part)
             if abs(geo_part) > range_val:
                 m = 'Must be between -%s and %s; received %s'
-                raise exceptions.ValidationError(m % (range_val, range_val, geo_part))
+                raise exceptions.ValidationError(m % (range_val, range_val,
+                                                      geo_part))
         except (TypeError, ValueError):
             raise exceptions.ValidationError(
-                'Expected float, received %s (a %s).' % (geo_part, typename(geo_part))
-            )
+                'Expected float, received %s (a %s).' %
+                (geo_part, typename(geo_part)))
         return geo_part
 
 
