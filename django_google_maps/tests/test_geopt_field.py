@@ -6,7 +6,6 @@ from django_google_maps import fields
 
 
 class GeoPtFieldTests(test.TestCase):
-
     def test_sets_lat_lon_on_initialization(self):
         geo_pt = fields.GeoPt("15.001,32.001")
         self.assertEqual(15.001, geo_pt.lat)
@@ -54,6 +53,7 @@ class GeoPtFieldTests(test.TestCase):
     def test_raises_error_when_attribute_error_on_split(self):
         class Fake(object):
             pass
+
         with self.assertRaises(exceptions.ValidationError):
             fields.GeoPt(Fake)
 
