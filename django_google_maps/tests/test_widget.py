@@ -10,7 +10,7 @@ class WidgetTests(test.TestCase):
         expected = '<input a1="1" a2="2" name="name" type="text" value="value" />'
         expected += '<div class="map_canvas_wrapper">'
         expected += '<div id="map_canvas"></div></div>'
-        self.assertEqual(expected, results)
+        self.assertHTMLEqual(expected, results)
 
     def test_render_returns_blank_for_value_when_none(self):
         widget = GoogleMapsAddressWidget()
@@ -18,7 +18,7 @@ class WidgetTests(test.TestCase):
         expected = '<input a1="1" a2="2" name="name" type="text" />'
         expected += '<div class="map_canvas_wrapper">'
         expected += '<div id="map_canvas"></div></div>'
-        self.assertEqual(expected, results)
+        self.assertHTMLEqual(expected, results)
 
     def test_maps_js_uses_api_key(self):
         widget = GoogleMapsAddressWidget()
