@@ -1,6 +1,9 @@
-Django-google-maps is a simple application that provides the basic
-hooks into google maps V3 api for use in django models from django
-version 1.8+.
+`django-google-maps` is a simple application that provides the basic
+hooks into google maps V3 api for use in Django models from Django
+version 1.8+.  
+
+Starting with `django-google-maps` version (0.7.0), Django 1.11+ is 
+required because Django changed their widget template rendering system.
 
 I'm using this to allow someone from the admin panels to type a
 freeform address, have the address geocoded on change and plotted

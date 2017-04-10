@@ -5,13 +5,11 @@ from setuptools import setup
 README = os.path.join(os.path.dirname(__file__), 'README.md')
 LONG_DESCRIPTION = open(README, 'r').read()
 CLASSIFIERS = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
     "Framework :: Django",
     "Framework :: Django",
-    "Framework :: Django :: 1.8",
-    "Framework :: Django :: 1.9",
-    "Framework :: Django :: 1.10",
+    "Framework :: Django :: 1.11",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
@@ -25,7 +23,7 @@ CLASSIFIERS = [
 
 setup(
     name="django-google-maps",
-    version='0.6.0',
+    version='0.7.0',
     author="Aaron Madison",
     author_email="aaron.l.madison@gmail.com",
     description="Plugs google maps V3 api into Django admin.",
