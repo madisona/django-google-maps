@@ -4,6 +4,6 @@ install:
 script:
   - tox -e $TOX_ENV
 env:
-  - TOX_ENV=py27-111
-  - TOX_ENV=py34-111
-  - TOX_ENV=py35-111
+  - TOX_ENV=py34-201
+  - TOX_ENV=py35-201
+  - TOX_ENV=py36-201
