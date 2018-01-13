@@ -73,8 +73,8 @@ class GeoPt(object):
             return geo_point.split(',')
         except (AttributeError, ValueError):
             m = 'Expected a "lat,long" formatted string; received %s (a %s).'
-            raise exceptions.ValidationError(m %
-                                             (geo_point, typename(geo_point)))
+            raise exceptions.ValidationError(m % (geo_point,
+                                                  typename(geo_point)))
 
     def _validate_geo_range(self, geo_part, range_val):
         try:
@@ -85,8 +85,8 @@ class GeoPt(object):
                                                       geo_part))
         except (TypeError, ValueError):
             raise exceptions.ValidationError(
-                'Expected float, received %s (a %s).' %
-                (geo_part, typename(geo_part)))
+                'Expected float, received %s (a %s).' % (geo_part,
+                                                         typename(geo_part)))
         return geo_part
 
 
@@ -128,5 +128,5 @@ class GeoLocationField(models.CharField):
         return force_text(self.to_python(value))
 
     def value_to_string(self, obj):
-        value = self._get_val_from_obj(obj)
+        value = self.value_from_object(obj)
         return self.get_prep_value(value)

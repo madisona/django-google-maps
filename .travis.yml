@@ -1,9 +1,16 @@
 language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
 install:
-  - pip install tox
+  - pip install -r requirements/test.txt
+  - pip install -q Django==$DJANGO_VERSION
 script:
-  - tox -e $TOX_ENV
+  - coverage run --source=django_google_maps manage.py test
+  - coverage report --show-missing
+  - flake8 django_google_maps --max-line-length=120 --max-complexity=4
+
 env:
-  - TOX_ENV=py27-111
-  - TOX_ENV=py34-111
-  - TOX_ENV=py35-111
+  - DJANGO_VERSION=1.11.9
+  - DJANGO_VERSION=2.0.1
