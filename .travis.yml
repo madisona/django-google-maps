@@ -12,4 +12,5 @@ script:
   - flake8 django_google_maps --max-line-length=120 --max-complexity=4
 
 env:
+  - DJANGO_VERSION=1.11.9
   - DJANGO_VERSION=2.0.1

@@ -1,16 +1,15 @@
-from django.urls import path
 
+import django
 from django.contrib import admin
 admin.autodiscover()
 
+
+if django.get_version() >= '2.0.0':
+    from django.urls import re_path as url
+else:
+    from django.conf.urls import url
+
+
 urlpatterns = [
-    # Examples:
-    # url(r'^$', 'google_maps.views.home', name='home'),
-    # path(r'google_maps/', google_maps.foo.urls),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # path(r'admin/doc/', django.contrib.admindocs.urls),
-
-    # Uncomment the next line to enable the admin:
-    path(r'admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
 ]
