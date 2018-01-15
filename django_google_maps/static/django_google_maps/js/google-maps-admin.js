@@ -27,6 +27,9 @@ function googleMapAdmin() {
     var map;
     var marker;
 
+    var geolocationId = 'id_geolocation';
+    var addressId = 'id_address';
+
     var self = {
         initialize: function() {
             var lat = 0;
@@ -52,18 +55,24 @@ function googleMapAdmin() {
                 self.setMarker(latlng);
             }
 
-            $("#id_address").change(function() {self.codeAddress();});
+            document.getElementById(addressId).addEventListener("change", self.codeAddress);
+
+            // adding auto completer. Field is already setup to adjust on address changes
+            // so no other listeners are necessary.
+            new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */(document.getElementById(addressId)),
+                {types: ['geocode']});
         },
 
         getExistingLocation: function() {
-            var geolocation = $("#id_geolocation").val();
+            var geolocation = document.getElementById(geolocationId).value;
             if (geolocation) {
                 return geolocation.split(',');
             }
         },
 
         codeAddress: function() {
-            var address = $("#id_address").val();
+            var address = document.getElementById(addressId).value;
             geocoder.geocode({'address': address}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var latlng = results[0].geometry.location;
@@ -110,9 +119,8 @@ function googleMapAdmin() {
         },
 
         updateGeolocation: function(latlng) {
-            $("#id_geolocation")
-                .val(latlng.lat() + "," + latlng.lng())
-                .trigger('change');
+            document.getElementById(geolocationId).value = latlng.lat() + "," + latlng.lng();
+            $("#" + geolocationId).trigger('change');
         }
     }
 
