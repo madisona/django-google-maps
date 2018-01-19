@@ -22,6 +22,6 @@ class WidgetTests(test.TestCase):
 
     def test_maps_js_uses_api_key(self):
         widget = GoogleMapsAddressWidget()
-        google_maps_js = "https://maps.google.com/maps/api/js?key={}".format(
+        google_maps_js = "https://maps.google.com/maps/api/js?key={}&libraries=places".format(
             settings.GOOGLE_MAPS_API_KEY)
         self.assertEqual(google_maps_js, widget.Media().js[1])
