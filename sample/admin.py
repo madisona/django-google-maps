@@ -10,7 +10,7 @@ from sample import models
 class SampleModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
         AddressField: {'widget': GoogleMapsAddressWidget},
-        GeoLocationField: {'widget': TextInput(attrs={'readonly': 'readonly', 'data-map-type': 'roadmap'})},
+        GeoLocationField: {'widget': TextInput(attrs={'readonly': 'readonly'})},
     }
 
 

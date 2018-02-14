@@ -77,7 +77,7 @@ function googleMapAdmin() {
 
         getMapType : function() {
             // https://developers.google.com/maps/documentation/javascript/maptypes
-            var geolocation = document.getElementById(geolocationId);
+            var geolocation = document.getElementById(addressId);
             var allowedType = ['roadmap', 'satellite', 'hybrid', 'terrain'];
             var mapType = geolocation.getAttribute('data-map-type');
 
