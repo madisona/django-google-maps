@@ -20,37 +20,44 @@ USAGE:
 - include the `django_google_maps` app in your `settings.py`
 - Add your Google Maps API Key in your `settings.py` as `GOOGLE_MAPS_API_KEY`
 - create a model that has both an address field and geolocation field
-  <pre><code>
-    from django.db import models
-    from django_google_maps import fields as map_fields
 
-    class Rental(models.Model):
-        address = map_fields.AddressField(max_length=200)
-        geolocation = map_fields.GeoLocationField(max_length=100)
-  </code></pre>
+  ```python
+  from django.db import models
+  from django_google_maps import fields as map_fields
+
+  class Rental(models.Model):
+      address = map_fields.AddressField(max_length=200)
+      geolocation = map_fields.GeoLocationField(max_length=100)
+  ```
+
 - in the `admin.py` include the following as a formfield_override
-  <pre><code>
-      from django.contrib import admin
-      from django_google_maps import widgets as map_widgets
-      from django_google_maps import fields as map_fields
 
-      class RentalAdmin(admin.ModelAdmin):
-          formfield_overrides = {
-              map_fields.AddressField: {'widget': map_widgets.GoogleMapsAddressWidget},
-          }
-  </code></pre>
-- in the `admin.py` you can change the card type (hybrid by default if no value is used) by adding an html attribute 
-in the address field. The list of allowed values is: `hybrid`, `roadmap`, `satellite`, `terrain`
-  <pre><code>
-      from django.contrib import admin
-      from django_google_maps import widgets as map_widgets
-      from django_google_maps import fields as map_fields
+  ```python
+  from django.contrib import admin
+  from django_google_maps import widgets as map_widgets
+  from django_google_maps import fields as map_fields
 
-      class RentalAdmin(admin.ModelAdmin):
-          formfield_overrides = {
-              map_fields.AddressField: {'widget': map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'})},
-          }
-  </code></pre>
+  class RentalAdmin(admin.ModelAdmin):
+      formfield_overrides = {
+          map_fields.AddressField: {'widget': map_widgets.GoogleMapsAddressWidget},
+      }
+  ```
+
+- To change the map type (`hybrid` by default), you can add an html attribute
+on the `AddressField` widget. The list of allowed values is: `hybrid`, `roadmap`, `satellite`, `terrain`
+
+  ```python
+  from django.contrib import admin
+  from django_google_maps import widgets as map_widgets
+  from django_google_maps import fields as map_fields
+  
+  class RentalAdmin(admin.ModelAdmin):
+      formfield_overrides = {
+          map_fields.AddressField: {
+            'widget': map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'})},
+      }
+  ```  
+
 That should be all you need to get started.
 
 I also like to make the geolocation field readonly in the admin so a user
