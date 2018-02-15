@@ -38,7 +38,8 @@ function googleMapAdmin() {
             var zoom = 2;
             // set up initial map to be world view. also, add change
             // event so changing address will update the map
-            existinglocation = self.getExistingLocation();
+            var existinglocation = self.getExistingLocation();
+
             if (existinglocation) {
                 lat = existinglocation[0];
                 lng = existinglocation[1];
@@ -49,7 +50,7 @@ function googleMapAdmin() {
             var myOptions = {
               zoom: zoom,
               center: latlng,
-              mapTypeId: google.maps.MapTypeId.HYBRID
+              mapTypeId: self.getMapType()
             };
             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             if (existinglocation) {
@@ -72,6 +73,19 @@ function googleMapAdmin() {
                     return false;
                 }
             });
+        },
+
+        getMapType : function() {
+            // https://developers.google.com/maps/documentation/javascript/maptypes
+            var geolocation = document.getElementById(addressId);
+            var allowedType = ['roadmap', 'satellite', 'hybrid', 'terrain'];
+            var mapType = geolocation.getAttribute('data-map-type');
+
+            if (mapType && -1 !== allowedType.indexOf(mapType)) {
+                return mapType;
+            }
+
+            return google.maps.MapTypeId.HYBRID;
         },
 
         getExistingLocation: function() {
@@ -141,7 +155,7 @@ function googleMapAdmin() {
             document.getElementById(geolocationId).value = latlng.lat() + "," + latlng.lng();
             $("#" + geolocationId).trigger('change');
         }
-    }
+    };
 
     return self;
 }

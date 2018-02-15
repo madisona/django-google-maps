@@ -4,7 +4,7 @@ build/*
 *.egg-info
 dist
 .coverage
-
+venv/
 *.pyc
 *.pyo
 .tox/*
