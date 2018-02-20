@@ -24,7 +24,7 @@ CLASSIFIERS = [
 
 setup(
     name="django-google-maps",
-    version='0.10.0',
+    version='0.10.1',
     author="Aaron Madison",
     author_email="aaron.l.madison@gmail.com",
     description="Plugs google maps V3 api into Django admin.",
@@ -32,8 +32,8 @@ setup(
     url="https://github.com/madisona/django-google-maps",
     packages=("django_google_maps",),
     include_package_data=True,
-    install_requires=open('requirements/requirements.txt').read().split('\n'),
-    tests_require=open('requirements/test.txt').read().split('\n'),
+    install_requires=open('requirements/requirements.txt').read().splitlines(),
+    tests_require=open('requirements/test.txt').read().splitlines(),
     classifiers=CLASSIFIERS,
     zip_safe=False,
 )
