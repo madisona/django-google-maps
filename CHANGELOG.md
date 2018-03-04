@@ -1,3 +1,5 @@
+## [0.10.1] - 2018-02-20
+ - Fixed: Install issue - `setup.py` now properly reads in requirements
 
 ## [0.10.0] - 2018-02-15
  - Added: Allow MapType to be customized
