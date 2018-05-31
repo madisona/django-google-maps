@@ -1,0 +1,19 @@
+[
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_allows_GeoPt_instantiated_with_empty_string",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_is_not_equal_when_comparison_is_not_GeoPt_object",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_len_returns_len_of_unicode_value",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_raises_error_when_attribute_error_on_split",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_raises_error_when_type_error_on_split",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_raises_exception_when_value_is_out_of_lower_range",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_raises_exception_when_value_is_out_of_upper_range",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_returns_float_value_when_valid_value",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_sets_lat_lon_on_initialization",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_splits_geo_point_on_comma",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_two_GeoPts_with_different_lat_should_not_be_equal",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_two_GeoPts_with_different_lon_should_not_be_equal",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_two_GeoPts_with_same_lat_lon_should_be_equal",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_uses_empty_string_as_unicode_representation_for_empty_GeoPt",
+  "django_google_maps/tests/test_geopt_field.py::GeoPtFieldTests::test_uses_lat_comma_lon_as_unicode_representation",
+  "django_google_maps/tests/test_typename.py::TypeNameTests::test_class_object",
+  "django_google_maps/tests/test_typename.py::TypeNameTests::test_simple_type_returns_type_name_as_string"
+]

@@ -1,0 +1,4 @@
+{
+  "django_google_maps/tests/test_geolocation_field.py": true,
+  "django_google_maps/tests/test_widget.py": true
+}
