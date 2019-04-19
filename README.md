@@ -1,3 +1,5 @@
+### <In English>
+
 `django-google-maps` is a simple application that provides the basic
 hooks into google maps V3 api for use in Django models from Django
 version 1.11+.  
@@ -69,3 +71,8 @@ When you're displaying the address back to the user, just request the map
 using the geocoordinates that were saved in your model. Maybe sometime when
 I get around to it I'll see if I can create a method that will build that
 into the model.
+
+
+
+
+
