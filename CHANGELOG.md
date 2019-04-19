@@ -1,3 +1,7 @@
+## [0.11.0] - 2019-04-19
+ - Added: Django 2.2 support
+ - Removed: Django 1.10
+
 ## [0.10.1] - 2018-02-20
  - Fixed: Install issue - `setup.py` now properly reads in requirements
 
