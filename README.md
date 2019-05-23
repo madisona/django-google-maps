@@ -60,6 +60,21 @@ on the `AddressField` widget. The list of allowed values is: `hybrid`, `roadmap`
       }
   ```  
 
+- To enable showing, not only address but also establishments in autocomplete you can add `data-show-establishments` to widget's
+attrs:
+
+  ```python
+  from django.contrib import admin
+  from django_google_maps import widgets as map_widgets
+  from django_google_maps import fields as map_fields
+
+  class RentalAdmin(admin.ModelAdmin):
+      formfield_overrides = {
+          map_fields.AddressField: {
+            'widget': map_widgets.GoogleMapsAddressWidget(attrs={'data-show-establishments': 'on'})},
+      }
+  ```
+
 That should be all you need to get started.
 
 I also like to make the geolocation field readonly in the admin so a user

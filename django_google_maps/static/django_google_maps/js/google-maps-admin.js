@@ -57,9 +57,14 @@ function googleMapAdmin() {
                 self.setMarker(latlng);
             }
 
+            var autocompleteOptions = {
+                types: ['geocode']
+            };
+            if (self.getShowEstablishments()) autocompleteOptions.types.push('establishment');
+
             autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(document.getElementById(addressId)),
-                {types: ['geocode']});
+                autocompleteOptions);
 
             // this only triggers on enter, or if a suggested location is chosen
             // todo: if a user doesn't choose a suggestion and presses tab, the map doesn't update
@@ -86,6 +91,12 @@ function googleMapAdmin() {
             }
 
             return google.maps.MapTypeId.HYBRID;
+        },
+
+        getShowEstablishments : function() {
+            var geolocation = document.getElementById(addressId);
+            var showEstablishments = geolocation.getAttribute('data-show-establishments');
+            return showEstablishments === 'on';
         },
 
         getExistingLocation: function() {
