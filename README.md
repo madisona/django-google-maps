@@ -59,6 +59,27 @@ on the `AddressField` widget. The list of allowed values is: `hybrid`, `roadmap`
             'widget': map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'})},
       }
   ```  
+  
+- To change the autcomplete options, you can add an html attribute
+on the `AddressField` widget. 
+See https://developers.google.com/maps/documentation/javascript/places-autocomplete#add_autocomplete for a list of available options
+
+  ```python
+  from django.contrib import admin
+  from django_google_maps import widgets as map_widgets
+  from django_google_maps import fields as map_fields
+  
+  class RentalAdmin(admin.ModelAdmin):
+      formfield_overrides = {
+          map_fields.AddressField: {
+            'widget': map_widgets.GoogleMapsAddressWidget(attrs={
+                'types': ['geocode', 'establishment'],
+                'componentRestrictions': {
+                    'country': 'us'
+                }
+            })},
+      }
+  ```  
 
 That should be all you need to get started.
 
