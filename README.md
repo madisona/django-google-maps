@@ -65,6 +65,7 @@ on the `AddressField` widget.
 See https://developers.google.com/maps/documentation/javascript/places-autocomplete#add_autocomplete for a list of available options
 
   ```python
+  import json
   from django.contrib import admin
   from django_google_maps import widgets as map_widgets
   from django_google_maps import fields as map_fields
@@ -73,11 +74,14 @@ See https://developers.google.com/maps/documentation/javascript/places-autocompl
       formfield_overrides = {
           map_fields.AddressField: {
             'widget': map_widgets.GoogleMapsAddressWidget(attrs={
-                'types': ['geocode', 'establishment'],
-                'componentRestrictions': {
-                    'country': 'us'
-                }
-            })},
+                'data-autocomplete-options': json.dumps({
+                    'types': ['geocode', 'establishment'],
+                    'componentRestrictions': {
+                        'country': 'us'
+                    }
+                })
+            })
+          },
       }
   ```  
 
