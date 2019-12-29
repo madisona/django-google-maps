@@ -59,7 +59,7 @@ function googleMapAdmin() {
 
             autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(document.getElementById(addressId)),
-                {types: ['geocode']});
+                self.getAutoCompleteOptions());
 
             // this only triggers on enter, or if a suggested location is chosen
             // todo: if a user doesn't choose a suggestion and presses tab, the map doesn't update
@@ -86,6 +86,19 @@ function googleMapAdmin() {
             }
 
             return google.maps.MapTypeId.HYBRID;
+        },
+
+        getAutoCompleteOptions : function() {
+            var geolocation = document.getElementById(addressId);
+            var autocompleteOptions = geolocation.getAttribute('data-autocomplete-options');
+
+            if (!autocompleteOptions) {
+                return {
+                   types: ['geocode']
+                };
+            }
+
+            return JSON.parse(autocompleteOptions);
         },
 
         getExistingLocation: function() {
