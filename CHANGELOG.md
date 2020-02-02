@@ -1,4 +1,4 @@
-## [1.0.0] - 2020-02-02
+## [0.12.0] - 2020-02-02
  - Changed: Updated for `from_db_value` `context` parameter deprecation
  - Added: Django 3.0 support
  - Removed: Python 2.0 support & django compatibility helpers
