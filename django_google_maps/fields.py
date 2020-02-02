@@ -18,7 +18,7 @@
 
 from django.core import exceptions
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import force_text
 
 __all__ = ('AddressField', 'GeoLocationField')
 
@@ -32,7 +32,6 @@ def typename(obj):
         return type(obj).__name__
 
 
-@python_2_unicode_compatible
 class GeoPt(object):
     """A geographical point."""
 

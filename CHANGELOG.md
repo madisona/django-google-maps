@@ -1,3 +1,8 @@
+## [1.0.0] - 2020-02-02
+ - Changed: Updated for `from_db_value` `context` parameter deprecation
+ - Added: Django 3.0 support
+ - Removed: Python 2.0 support & django compatibility helpers
+
 ## [0.11.0] - 2019-04-19
  - Added: Django 2.2 support
  - Removed: Django 1.10
