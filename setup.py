@@ -2,7 +2,7 @@
 import os
 from setuptools import setup
 
-README = os.path.join(os.path.dirname(__file__), 'README.md')
+README = os.path.join(os.path.dirname(__file__), 'README.rst')
 LONG_DESCRIPTION = open(README, 'r').read()
 CLASSIFIERS = [
     "Development Status :: 4 - Beta",
