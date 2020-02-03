@@ -1,3 +1,6 @@
+## [0.12.1] - 2020-02-03
+ - Fixed: Fixed install requirement for Django 3
+ 
 ## [0.12.0] - 2020-02-02
  - Changed: Updated for `from_db_value` `context` parameter deprecation
  - Added: Django 3.0 support
