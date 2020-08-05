@@ -13,6 +13,7 @@ CLASSIFIERS = [
     "Framework :: Django :: 2.0",
     "Framework :: Django :: 2.2",
     "Framework :: Django :: 3.0",
+    "Framework :: Django :: 3.1",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
@@ -27,7 +28,7 @@ CLASSIFIERS = [
 
 setup(
     name="django-google-maps",
-    version='0.12.1',
+    version='0.12.2',
     author="Aaron Madison",
     author_email="aaron.l.madison@gmail.com",
     description="Plugs google maps V3 api into Django admin.",
