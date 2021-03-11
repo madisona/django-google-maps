@@ -30,6 +30,8 @@ function googleMapAdmin() {
 
     var geolocationId = 'id_geolocation';
     var addressId = 'id_address';
+    var addressUrlId = 'id_address_url';
+    var supportCountryId = 'id_support_country';
 
     var self = {
         initialize: function() {
@@ -110,6 +112,7 @@ function googleMapAdmin() {
 
         codeAddress: function() {
             var place = autocomplete.getPlace();
+            self.updateExtraFields(place)
 
             if(place.geometry !== undefined) {
                 self.updateWithCoordinates(place.geometry.location);
@@ -124,6 +127,18 @@ function googleMapAdmin() {
                     }
                 });
             }
+        },
+
+        updateExtraFields: function(place) {
+            const filteredCountryArray = place.address_components.filter((addressComponent) => {
+              return addressComponent.types.includes('country')
+            })
+            document.getElementById(supportCountryId).value = filteredCountryArray.length
+                ? filteredCountryArray[0].short_name
+                : '';
+            $("#" + supportCountryId).trigger('change');
+            document.getElementById(addressUrlId).value = place.url;
+            $("#" + addressUrlId).trigger('change');
         },
 
         updateWithCoordinates: function(latlng) {
