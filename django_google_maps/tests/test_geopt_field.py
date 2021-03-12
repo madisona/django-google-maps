@@ -76,3 +76,11 @@ class GeoPtFieldTests(test.TestCase):
     def test_len_returns_len_of_unicode_value(self):
         geo_pt = fields.GeoPt("84,12")
         self.assertEqual(9, len(geo_pt))
+
+    def test_raises_exception_not_enough_values_to_unpack(self):
+        with self.assertRaises(exceptions.ValidationError):
+            fields.GeoPt('22')
+
+    def test_raises_exception_too_many_values_to_unpack(self):
+        with self.assertRaises(exceptions.ValidationError):
+            fields.GeoPt('22,50,90')
