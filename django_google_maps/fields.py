@@ -69,7 +69,8 @@ class GeoPt(object):
     def _split_geo_point(self, geo_point):
         """splits the geo point into lat and lon"""
         try:
-            return geo_point.split(',')
+            lat, lon = geo_point.split(',')
+            return lat, lon
         except (AttributeError, ValueError):
             m = 'Expected a "lat,long" formatted string; received %s (a %s).'
             raise exceptions.ValidationError(m % (geo_point,
