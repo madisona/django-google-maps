@@ -41,6 +41,6 @@ jobs:
           pip install -q Django==${{ matrix.django-version }}
       - name: Run Tests
         run: |
-          coverage run --source=pseudo_cms manage.py test
+          coverage run --source=django_google_maps manage.py test
           coverage report --show-missing
-          flake8 pseudo_cms --exclude=pseudo_cms/south_migrations/*,pseudo_cms/migrations* --max-line-length=120
+          flake8 django_google_maps --max-line-length=120 --max-complexity=4
