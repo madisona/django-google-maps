@@ -1,3 +1,9 @@
+## [0.12.3] - 2021-04-04
+ - Fixed: Fixed bug catching malformed lat/lon in `GeoPt` field
+ - Fixed: Removed redundant `STATIC_URL` in `GoogleMapsAddressWidget`
+ - Changed: Updated css for map to be responsive in the admin
+ - Changed: Moved CI to Github Actions
+
 ## [0.12.2] - 2020-08-05
  - Added: Django 3.1 support
 
