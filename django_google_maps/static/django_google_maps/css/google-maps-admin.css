@@ -1,4 +1,11 @@
+@media (min-width: 848px) {
+    .map_canvas_wrapper {margin-left: 170px;}
+    .main.shifted .map_canvas_wrapper {margin-left: 0;}
+}
+@media (min-width: 1118px) {
+    .main.shifted .map_canvas_wrapper {margin-left: 170px;}
+}
 
 #id_address {width: 40em;}
-.map_canvas_wrapper {margin-left: 170px;}
+.map_canvas_wrapper {width: 100%;}
 #map_canvas {width: 100%; height: 40em;}
