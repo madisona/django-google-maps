@@ -1,3 +1,6 @@
+## [0.12.4] - 2021-04-06
+ - Added: Django 3.2 support
+
 ## [0.12.3] - 2021-04-04
  - Fixed: Fixed bug catching malformed lat/lon in `GeoPt` field
  - Fixed: Removed redundant `STATIC_URL` in `GoogleMapsAddressWidget`
