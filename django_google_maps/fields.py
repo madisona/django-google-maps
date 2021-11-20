@@ -18,7 +18,7 @@
 
 from django.core import exceptions
 from django.db import models
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 __all__ = ('AddressField', 'GeoLocationField')
 
@@ -64,7 +64,7 @@ class GeoPt(object):
             return bool(self.lat == other.lat and self.lon == other.lon)
 
     def __len__(self):
-        return len(force_text(self))
+        return len(force_str(self))
 
     def _split_geo_point(self, geo_point):
         """splits the geo point into lat and lon"""
@@ -125,7 +125,7 @@ class GeoLocationField(models.CharField):
         """prepare the value for database query"""
         if value is None:
             return None
-        return force_text(self.to_python(value))
+        return force_str(self.to_python(value))
 
     def value_to_string(self, obj):
         value = self.value_from_object(obj)
