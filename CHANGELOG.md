@@ -1,3 +1,7 @@
+## [0.13.0] - 2022-03-22
+ - Added: Django 4.0 support
+ - Added: Python 3.10 support
+
 ## [0.12.4] - 2021-04-06
  - Added: Django 3.2 support
 
