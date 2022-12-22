@@ -60,11 +60,8 @@ class GeoPt(object):
         return ''
 
     def __eq__(self, other):
-        if isinstance(other, str):
-            other = GeoPt(other)
         if isinstance(other, GeoPt):
             return bool(self.lat == other.lat and self.lon == other.lon)
-        return False
 
     def __len__(self):
         return len(force_str(self))
@@ -115,9 +112,6 @@ class GeoLocationField(models.CharField):
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 100
         super(GeoLocationField, self).__init__(*args, **kwargs)
-
-    def from_db_value(self, value, *args, **kwargs):
-        return self.to_python(value)
 
     def to_python(self, value):
         if isinstance(value, GeoPt):
