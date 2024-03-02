@@ -88,6 +88,50 @@ USAGE:
           },
       }
 
+USING INLINE FORMS:
+===================
+-  To use as a model admin inline form, everything is basically the same as above except for the widget
+   used. It's best to use ``django.contrib.admin.StackedInline`` as opposed to ``django.contrib.admin.TabularInline``
+
+   .. code:: python
+
+      from django.db import models
+      from django_google_maps import fields as map_fields
+
+      class Shipment(models.Model):
+          tracking_id = models.CharField(max_length=255)
+          carrier = models.CharField(max_length=255)
+
+      class Location(models.Model):
+          shipment = models.ForeignKey(Shipment)
+          address = map_fields.AddressField(max_length=200)
+          geolocation = map_fields.GeoLocationField(max_length=50)
+
+-  in the ``admin.py`` file, define a model form and a stacked inline like below:
+
+   .. code:: python
+
+      from django import forms
+      from django.contrib import admin
+      from django_google_maps import widgets as map_widgets
+
+      from . import models
+
+      class LocationForm(forms.ModelForm):
+          class Meta:
+              model = models.Location
+              widgets = {
+                  "address": map_widgets.GoogleMapsAddressInlineWidget(),
+              }
+
+      class LocationInline(admin.StackedInline):
+          model = models.Location
+          form = LocationForm
+
+      @admin.register(models.Shipment)
+      class ShipmentAdmin(admin.ModelAdmin):
+          inlines = [LocationInline]
+
 That should be all you need to get started.
 
 I also like to make the geolocation field readonly in the admin so a user
