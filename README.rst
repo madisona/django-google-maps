@@ -107,15 +107,12 @@ USING INLINE FORMS:
           address = map_fields.AddressField(max_length=200)
           geolocation = map_fields.GeoLocationField(max_length=50)
 
--  in the ``admin.py`` file, define a model form and a stacked inline like below:
+-  in the ``forms.py`` file, define the form and set widget for "address" field:
 
    .. code:: python
 
       from django import forms
-      from django.contrib import admin
       from django_google_maps import widgets as map_widgets
-
-      from . import models
 
       class LocationForm(forms.ModelForm):
           class Meta:
@@ -124,9 +121,17 @@ USING INLINE FORMS:
                   "address": map_widgets.GoogleMapsAddressInlineWidget(),
               }
 
+-  in the ``admin.py`` file, define a model form and a stacked inline like below:
+
+   .. code:: python
+
+      from django.contrib import admin
+
+      from . import models, forms
+
       class LocationInline(admin.StackedInline):
           model = models.Location
-          form = LocationForm
+          form = forms.LocationForm
 
       @admin.register(models.Shipment)
       class ShipmentAdmin(admin.ModelAdmin):
