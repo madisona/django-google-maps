@@ -1,3 +1,6 @@
+## [0.13.1] - 2024-03-02
+ - Added: Inline form support
+
 ## [0.13.0] - 2022-03-22
  - Added: Django 4.0 support
  - Added: Python 3.10 support

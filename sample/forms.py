@@ -1,13 +1,21 @@
 from django import forms
-from sample.models import SampleModel
-from django_google_maps.widgets import GoogleMapsAddressWidget
+
+from django_google_maps import widgets
+from sample import models
 
 
-class SampleForm(forms.ModelForm):
-
+class LocationForm(forms.ModelForm):
     class Meta(object):
-        model = SampleModel
-        fields = ['address', 'geolocation']
+        model = models.Location
+        fields = ["address", "geolocation"]
+        widgets = {"address": widgets.GoogleMapsAddressWidget}
+
+
+class HotelLocationForm(forms.ModelForm):
+    class Meta(object):
+        model = models.HotelLocation
+        fields = ["address", "geolocation", "hotel"]
         widgets = {
-            "address": GoogleMapsAddressWidget,
+            "address": widgets.GoogleMapsAddressInlineWidget,
+            "geolocation": forms.widgets.TextInput(attrs={"readonly": "readonly"}),
         }
