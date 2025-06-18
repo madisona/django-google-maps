@@ -34,7 +34,7 @@ def typename(obj):
 
 class GeoPt(object):
     """A geographical point."""
-
+    
     lat = None
     lon = None
 
@@ -60,9 +60,13 @@ class GeoPt(object):
         return ''
 
     def __eq__(self, other):
+        if other is None:
+            other = GeoPt(None)
+        elif isinstance(other, str):
+            other = GeoPt(other)
         if isinstance(other, GeoPt):
             return bool(self.lat == other.lat and self.lon == other.lon)
-
+        
     def __len__(self):
         return len(force_str(self))
 
@@ -88,8 +92,8 @@ class GeoPt(object):
                 'Expected float, received %s (a %s).' % (geo_part,
                                                          typename(geo_part)))
         return geo_part
-
-
+    
+    
 class AddressField(models.CharField):
     pass
 

@@ -31,11 +31,21 @@ class GeoPtFieldTests(test.TestCase):
         geo_pt_2 = fields.GeoPt("15.001,62.001")
         self.assertNotEqual(geo_pt_1, geo_pt_2)
 
-    def test_is_not_equal_when_comparison_is_not_GeoPt_object(self):
+    def test_is_equal_when_comparison_str_GeoPt_object(self):
         geo_pt_1 = fields.GeoPt("15.001,32.001")
         geo_pt_2 = "15.001,32.001"
+        self.assertEqual(geo_pt_1, geo_pt_2)
+        
+    def test_is_not_equal_when_comparison_str_GeoPt_object(self):
+        geo_pt_1 = fields.GeoPt("15.001,32.001")
+        geo_pt_2 = "25.001,32.001"
         self.assertNotEqual(geo_pt_1, geo_pt_2)
 
+    def test_compare_empty_GeoPt_to_None_object(self):
+        geo_pt_1 = fields.GeoPt(None)
+        geo_pt_2 = None
+        self.assertEqual(geo_pt_1, geo_pt_2)
+        
     def test_allows_GeoPt_instantiated_with_empty_string(self):
         geo_pt = fields.GeoPt('')
         self.assertEqual(None, geo_pt.lat)
