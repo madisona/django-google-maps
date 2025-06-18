@@ -66,6 +66,7 @@ class GeoPt(object):
             other = GeoPt(other)
         if isinstance(other, GeoPt):
             return bool(self.lat == other.lat and self.lon == other.lon)
+        return NotImplemented
         
     def __len__(self):
         return len(force_str(self))
