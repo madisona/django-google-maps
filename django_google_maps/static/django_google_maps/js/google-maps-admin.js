@@ -46,11 +46,11 @@ function googleMapAdmin() {
                 zoom = 18;
             }
 
-            var latlng = new google.maps.LatLng(lat,lng);
+            var latlng = new google.maps.LatLng(lat, lng);
             var myOptions = {
-              zoom: zoom,
-              center: latlng,
-              mapTypeId: self.getMapType()
+                zoom: zoom,
+                center: latlng,
+                mapTypeId: self.getMapType()
             };
             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             if (existinglocation) {
@@ -59,7 +59,8 @@ function googleMapAdmin() {
 
             autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(document.getElementById(addressId)),
-                self.getAutoCompleteOptions());
+                self.getAutoCompleteOptions()
+            );
 
             // this only triggers on enter, or if a suggested location is chosen
             // todo: if a user doesn't choose a suggestion and presses tab, the map doesn't update
@@ -67,15 +68,15 @@ function googleMapAdmin() {
 
             // don't make enter submit the form, let it just trigger the place_changed event
             // which triggers the map update & geocode
-            $("#" + addressId).keydown(function (e) {
-                if (e.keyCode == 13) {  // enter key
+            document.getElementById(addressId).addEventListener("keydown", function(e) {
+                if (e.key === "Enter") {
                     e.preventDefault();
                     return false;
                 }
             });
         },
 
-        getMapType : function() {
+        getMapType: function() {
             // https://developers.google.com/maps/documentation/javascript/maptypes
             var geolocation = document.getElementById(addressId);
             var allowedType = ['roadmap', 'satellite', 'hybrid', 'terrain'];
@@ -88,13 +89,13 @@ function googleMapAdmin() {
             return google.maps.MapTypeId.HYBRID;
         },
 
-        getAutoCompleteOptions : function() {
+        getAutoCompleteOptions: function() {
             var geolocation = document.getElementById(addressId);
             var autocompleteOptions = geolocation.getAttribute('data-autocomplete-options');
 
             if (!autocompleteOptions) {
                 return {
-                   types: ['geocode']
+                    types: ['geocode']
                 };
             }
 
@@ -111,11 +112,10 @@ function googleMapAdmin() {
         codeAddress: function() {
             var place = autocomplete.getPlace();
 
-            if(place.geometry !== undefined) {
+            if (place.geometry !== undefined) {
                 self.updateWithCoordinates(place.geometry.location);
-            }
-            else {
-                geocoder.geocode({'address': place.name}, function(results, status) {
+            } else {
+                geocoder.geocode({ 'address': place.name }, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         var latlng = results[0].geometry.location;
                         self.updateWithCoordinates(latlng);
@@ -137,7 +137,7 @@ function googleMapAdmin() {
             if (marker) {
                 self.updateMarker(latlng);
             } else {
-                self.addMarker({'latlng': latlng, 'draggable': true});
+                self.addMarker({ 'latlng': latlng, 'draggable': true });
             }
         },
 
@@ -166,14 +166,17 @@ function googleMapAdmin() {
 
         updateGeolocation: function(latlng) {
             document.getElementById(geolocationId).value = latlng.lat() + "," + latlng.lng();
-            $("#" + geolocationId).trigger('change');
+
+            // manually trigger a change event
+            var event = new Event('change', { bubbles: true });
+            document.getElementById(geolocationId).dispatchEvent(event);
         }
     };
 
     return self;
 }
 
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
     var googlemap = googleMapAdmin();
     googlemap.initialize();
 });
