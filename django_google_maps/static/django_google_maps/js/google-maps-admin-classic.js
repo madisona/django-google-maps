@@ -176,8 +176,7 @@ function googleMapAdmin() {
     return self;
 }
 
-function initGoogleMapAdmin() {
+document.addEventListener("DOMContentLoaded", function() {
     var googlemap = googleMapAdmin();
     googlemap.initialize();
-}
-
+});
