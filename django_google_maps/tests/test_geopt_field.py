@@ -37,18 +37,18 @@ class GeoPtFieldTests(test.TestCase):
         self.assertNotEqual(geo_pt_1, geo_pt_2)
 
     def test_allows_GeoPt_instantiated_with_empty_string(self):
-        geo_pt = fields.GeoPt('')
+        geo_pt = fields.GeoPt("")
         self.assertEqual(None, geo_pt.lat)
         self.assertEqual(None, geo_pt.lon)
 
     def test_uses_empty_string_as_unicode_representation_for_empty_GeoPt(self):
-        geo_pt = fields.GeoPt('')
-        self.assertEqual('', force_str(geo_pt))
+        geo_pt = fields.GeoPt("")
+        self.assertEqual("", force_str(geo_pt))
 
     def test_splits_geo_point_on_comma(self):
         pt = fields.GeoPt("15.001,32.001")
-        self.assertEqual('15.001', str(pt.lat))
-        self.assertEqual('32.001', str(pt.lon))
+        self.assertEqual("15.001", str(pt.lat))
+        self.assertEqual("32.001", str(pt.lon))
 
     def test_raises_error_when_attribute_error_on_split(self):
         class Fake(object):
@@ -62,16 +62,16 @@ class GeoPtFieldTests(test.TestCase):
             x, y = fields.GeoPt("x,x")
 
     def test_returns_float_value_when_valid_value(self):
-        geo_pt = fields.GeoPt('45.005,180')
+        geo_pt = fields.GeoPt("45.005,180")
         self.assertEqual(45.005, geo_pt.lat)
 
     def test_raises_exception_when_value_is_out_of_upper_range(self):
         with self.assertRaises(exceptions.ValidationError):
-            fields.GeoPt('180,180')
+            fields.GeoPt("180,180")
 
     def test_raises_exception_when_value_is_out_of_lower_range(self):
         with self.assertRaises(exceptions.ValidationError):
-            fields.GeoPt('-180,180')
+            fields.GeoPt("-180,180")
 
     def test_len_returns_len_of_unicode_value(self):
         geo_pt = fields.GeoPt("84,12")
@@ -79,8 +79,8 @@ class GeoPtFieldTests(test.TestCase):
 
     def test_raises_exception_not_enough_values_to_unpack(self):
         with self.assertRaises(exceptions.ValidationError):
-            fields.GeoPt('22')
+            fields.GeoPt("22")
 
     def test_raises_exception_too_many_values_to_unpack(self):
         with self.assertRaises(exceptions.ValidationError):
-            fields.GeoPt('22,50,90')
+            fields.GeoPt("22,50,90")
