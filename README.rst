@@ -99,6 +99,3 @@ When you're displaying the address back to the user, just request the map
 using the geocoordinates that were saved in your model. Maybe sometime when
 I get around to it I'll see if I can create a method that will build that
 into the model.
-
-.. |Build Status| image:: https://travis-ci.org/madisona/django-google-maps.png
-   :target: https://travis-ci.org/madisona/django-google-maps
