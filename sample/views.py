@@ -1,8 +1,8 @@
 from django.views.generic import FormView
 
-from sample.forms import SampleForm
+from sample.forms import LocationForm
 
 
-class SampleFormView(FormView):
-    form_class = SampleForm
+class LocationFormView(FormView):
+    form_class = LocationForm
     template_name = "sample/index.html"
