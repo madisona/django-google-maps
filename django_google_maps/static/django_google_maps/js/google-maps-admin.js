@@ -59,7 +59,8 @@ function googleMapAdmin() {
                 mapTypeId: self.getMapType(),
                 streetViewControl: false,
                 mapTypeControl: true,
-                fullscreenControl: false
+                fullscreenControl: false,
+                mapId: "dj-google-maps-admin"
             };
 
             // Create the map instance
@@ -198,24 +199,24 @@ function googleMapAdmin() {
          * @param {object} Options - Marker options, including latlng and draggable.
          */
         addMarker: function (Options) {
-            marker = new google.maps.Marker({
+            var draggable = Options.draggable || false;
+            marker = new google.maps.marker.AdvancedMarkerElement({
                 map: map,
-                position: Options.latlng
+                position: Options.latlng,
+                gmpDraggable: draggable
             });
 
-            var draggable = Options.draggable || false;
             if (draggable) {
-                self.addMarkerDrag();
+                self.addMarkerDrag(marker);
             }
         },
 
         /**
          * Adds a 'dragend' listener to the marker to update geolocation when dragged.
          */
-        addMarkerDrag: function () {
-            marker.setDraggable(true);
+        addMarkerDrag: function (draggableMarker) {
             // Use the modern addListener method
-            marker.addListener('dragend', function (event) {
+            draggableMarker.addListener('dragend', function (event) {
                 self.updateGeolocation(event.latLng);
             });
         },
@@ -225,7 +226,7 @@ function googleMapAdmin() {
          * @param {google.maps.LatLng} latlng - The new LatLng for the marker.
          */
         updateMarker: function (latlng) {
-            marker.setPosition(latlng);
+            marker.position = latlng;
         },
 
         /**
@@ -275,8 +276,12 @@ function googleMapAdmin() {
     return self;
 }
 
-// Initialize the map when the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", function () {
+
+async function initGoogleMap() {
+    await google.maps.importLibrary("maps");
+    await google.maps.importLibrary("marker");
+    await google.maps.importLibrary("places");
+
     var googlemap = googleMapAdmin();
     googlemap.initialize();
-});
+}
