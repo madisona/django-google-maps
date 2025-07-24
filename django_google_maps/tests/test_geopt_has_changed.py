@@ -1,6 +1,8 @@
-from django.test import TestCase
-from django_google_maps.fields import GeoPt, GeoLocationField
 from django import forms
+from django.db import models
+from django.test import TestCase
+
+from django_google_maps.fields import GeoPt, GeoLocationField
 
 
 class GeoLocationFieldHasChangedTests(TestCase):
@@ -10,9 +12,6 @@ class GeoLocationFieldHasChangedTests(TestCase):
 
     def setUp(self):
         """Set up a model and form for testing."""
-
-        # Create a test model class dynamically
-        from django.db import models
 
         class TestModel(models.Model):
             location = GeoLocationField(max_length=100, blank=True)
