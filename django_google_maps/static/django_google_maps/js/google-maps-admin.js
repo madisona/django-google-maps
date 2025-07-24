@@ -71,23 +71,34 @@ function googleMapAdmin() {
                 self.setMarker(latlng);
             }
 
-            // Initialize Google Places Autocomplete on the address input field
-            autocomplete = new google.maps.places.Autocomplete(
-                /** @type {!HTMLInputElement} */(document.getElementById(addressId)),
-                self.getAutoCompleteOptions());
+            // Initialize Google Places Autocomplete Element
+            const addressInput = document.getElementById(addressId);
+            if (addressInput) {
+                // Create the new Place Autocomplete web component
+                autocomplete = new google.maps.places.PlaceAutocompleteElement();
 
-            // Add listener for when a place is selected from the autocomplete suggestions
-            // This triggers when the user presses enter or selects a suggestion
-            autocomplete.addListener("place_changed", self.codeAddress);
+                // Copy essential properties from the old input to the new element
+                autocomplete.id = addressInput.id;
+                autocomplete.name = addressInput.name;
+                autocomplete.className = addressInput.className;
+                autocomplete.placeholder = addressInput.placeholder || 'Enter an address';
 
-            // Prevent the 'Enter' key from submitting the form when in the address field.
-            // Instead, it should trigger the place_changed event for autocomplete.
-            document.getElementById(addressId).addEventListener("keydown", function (e) {
-                if (e.key === "Enter") {
-                    e.preventDefault();
-                    return false;
+                // *** THE FIX: Attach the element to the DOM *before* configuring it. ***
+                // 1. Replace the original input with the new component.
+                addressInput.parentNode.replaceChild(autocomplete, addressInput);
+
+                // 2. Now that the element is live, apply Google-specific properties.
+                const autocompleteOptions = self.getAutoCompleteOptions();
+                if (autocompleteOptions.types) {
+                    autocomplete.types = autocompleteOptions.types;
                 }
-            });
+                if (autocompleteOptions.componentRestrictions) {
+                    autocomplete.componentRestrictions = autocompleteOptions.componentRestrictions;
+                }
+
+                // 3. Add the event listener.
+                autocomplete.addEventListener("gmp-placechange", self.codeAddress);
+            }
         },
 
         /**
@@ -114,21 +125,35 @@ function googleMapAdmin() {
          * @returns {object} Autocomplete options object.
          */
         getAutoCompleteOptions: function () {
-            var addressInput = document.getElementById(addressId);
-            var autocompleteOptions = addressInput.getAttribute('data-autocomplete-options');
+            // The original input is gone, so we get attributes from our new element.
+            var autocompleteElement = document.getElementById(addressId);
+            var autocompleteOptions = autocompleteElement.getAttribute('data-autocomplete-options');
 
             if (!autocompleteOptions) {
                 return {
-                    types: ['geocode']
+                    types: ['address']
                 };
             }
 
             try {
-                return JSON.parse(autocompleteOptions);
+                let parsedOptions = JSON.parse(autocompleteOptions);
+
+                // Robustly cleanse the 'types' array for the old 'geocode' value.
+                if (parsedOptions.types && Array.isArray(parsedOptions.types)) {
+                    const typeIndex = parsedOptions.types.indexOf('geocode');
+                    if (typeIndex > -1) {
+                        console.warn(
+                            "Google Maps Admin: The 'geocode' autocomplete type is deprecated for this component and was automatically replaced with 'address'. Please update the 'data-autocomplete-options' attribute in your HTML template."
+                        );
+                        parsedOptions.types[typeIndex] = 'address';
+                    }
+                }
+
+                return parsedOptions;
             } catch (e) {
                 console.error("Error parsing data-autocomplete-options:", e);
                 self.showMessage("Error: Invalid autocomplete options format. Using default.", 'error');
-                return {types: ['geocode']};
+                return {types: ['address']};
             }
         },
 
@@ -145,23 +170,25 @@ function googleMapAdmin() {
         },
 
         /**
-         * Geocodes the address entered in the autocomplete field.
+         * Geocodes the address from the autocomplete element.
          * Updates the map and marker based on the geocoded location.
          */
         codeAddress: function () {
-            var place = autocomplete.getPlace();
+            // For PlaceAutocompleteElement, the result is on the `.place` property
+            var place = autocomplete.place;
 
-            // Checkifa place with geometry (location) was found by Autocomplete
-            if (place.geometry && place.geometry.location) {
+            // Check if a place with geometry (location) was found
+            if (place && place.geometry && place.geometry.location) {
                 self.updateWithCoordinates(place.geometry.location);
-            } else if (place.name) {
-                // If no geometry, but a place name exists, try to geocode it
-                geocoder.geocode({'address': place.name}, function (results, status) {
+            } else if (place && place.displayName) {
+                // If no geometry, but a place name exists, try to geocode it.
+                // The new Place object uses `displayName`.
+                geocoder.geocode({'address': place.displayName}, function (results, status) {
                     if (status === 'OK' && results.length > 0) {
                         var latlng = results[0].geometry.location;
                         self.updateWithCoordinates(latlng);
                     } else if (status === 'ZERO_RESULTS') {
-                        self.showMessage("No results found for '" + place.name + "'.", 'warning');
+                        self.showMessage("No results found for '" + place.displayName + "'.", 'warning');
                     } else {
                         self.showMessage("Geocode was not successful for the following reason: " + status, 'error');
                     }
@@ -249,6 +276,7 @@ function googleMapAdmin() {
          */
         showMessage: function (message, type = 'info') {
             var messageBox = document.getElementById(messageBoxId);
+            if (!messageBox) return; // Guard against missing message box
             messageBox.textContent = message;
 
             // Clear previous styling classes
@@ -264,11 +292,11 @@ function googleMapAdmin() {
                 messageBox.classList.add('bg-blue-100', 'text-blue-800', 'border-blue-400');
             }
 
-            messageBox.classList.add('show'); // Make it visible
+            messageBox.style.opacity = 1; // Make it visible
 
             // Hide the message after 5 seconds
             setTimeout(function () {
-                messageBox.classList.remove('show');
+                messageBox.style.opacity = 0;
             }, 5000);
         }
     };
@@ -281,6 +309,7 @@ async function initGoogleMap() {
     await google.maps.importLibrary("maps");
     await google.maps.importLibrary("marker");
     await google.maps.importLibrary("places");
+    await google.maps.importLibrary("geocoding");
 
     var googlemap = googleMapAdmin();
     googlemap.initialize();
