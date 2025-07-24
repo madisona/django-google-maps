@@ -27,4 +27,4 @@ class WidgetTests(test.TestCase):
                 settings.GOOGLE_MAPS_API_KEY
             )
         )
-        self.assertEqual(google_maps_js, widget.Media().js[1])
+        self.assertEqual(google_maps_js, widget.Media().js[0])
