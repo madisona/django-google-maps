@@ -1,4 +1,3 @@
-
 /*
 Integration for Google Maps in the django admin.
 
@@ -32,7 +31,7 @@ function googleMapAdmin() {
     var addressId = 'id_address';
 
     var self = {
-        initialize: function() {
+        initialize: function () {
             var lat = 0;
             var lng = 0;
             var zoom = 2;
@@ -68,7 +67,7 @@ function googleMapAdmin() {
 
             // don't make enter submit the form, let it just trigger the place_changed event
             // which triggers the map update & geocode
-            document.getElementById(addressId).addEventListener("keydown", function(e) {
+            document.getElementById(addressId).addEventListener("keydown", function (e) {
                 if (e.key === "Enter") {
                     e.preventDefault();
                     return false;
@@ -76,7 +75,7 @@ function googleMapAdmin() {
             });
         },
 
-        getMapType: function() {
+        getMapType: function () {
             // https://developers.google.com/maps/documentation/javascript/maptypes
             var geolocation = document.getElementById(addressId);
             var allowedType = ['roadmap', 'satellite', 'hybrid', 'terrain'];
@@ -89,7 +88,7 @@ function googleMapAdmin() {
             return google.maps.MapTypeId.HYBRID;
         },
 
-        getAutoCompleteOptions: function() {
+        getAutoCompleteOptions: function () {
             var geolocation = document.getElementById(addressId);
             var autocompleteOptions = geolocation.getAttribute('data-autocomplete-options');
 
@@ -102,23 +101,25 @@ function googleMapAdmin() {
             return JSON.parse(autocompleteOptions);
         },
 
-        getExistingLocation: function() {
+        getExistingLocation: function () {
             var geolocation = document.getElementById(geolocationId).value;
             if (geolocation) {
                 return geolocation.split(',');
             }
         },
 
-        codeAddress: function() {
+        codeAddress: function () {
             var place = autocomplete.getPlace();
 
             if (place.geometry !== undefined) {
                 self.updateWithCoordinates(place.geometry.location);
             } else {
-                geocoder.geocode({ 'address': place.name }, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
+                geocoder.geocode({'address': place.name}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK && results.length > 0) { // Add results.length check
                         var latlng = results[0].geometry.location;
                         self.updateWithCoordinates(latlng);
+                    } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+                        alert("No results found for " + place.name + ".");
                     } else {
                         alert("Geocode was not successful for the following reason: " + status);
                     }
@@ -126,22 +127,22 @@ function googleMapAdmin() {
             }
         },
 
-        updateWithCoordinates: function(latlng) {
+        updateWithCoordinates: function (latlng) {
             map.setCenter(latlng);
             map.setZoom(18);
             self.setMarker(latlng);
             self.updateGeolocation(latlng);
         },
 
-        setMarker: function(latlng) {
+        setMarker: function (latlng) {
             if (marker) {
                 self.updateMarker(latlng);
             } else {
-                self.addMarker({ 'latlng': latlng, 'draggable': true });
+                self.addMarker({'latlng': latlng, 'draggable': true});
             }
         },
 
-        addMarker: function(Options) {
+        addMarker: function (Options) {
             marker = new google.maps.Marker({
                 map: map,
                 position: Options.latlng
@@ -153,22 +154,22 @@ function googleMapAdmin() {
             }
         },
 
-        addMarkerDrag: function() {
+        addMarkerDrag: function () {
             marker.setDraggable(true);
-            google.maps.event.addListener(marker, 'dragend', function(new_location) {
+            google.maps.event.addListener(marker, 'dragend', function (new_location) {
                 self.updateGeolocation(new_location.latLng);
             });
         },
 
-        updateMarker: function(latlng) {
+        updateMarker: function (latlng) {
             marker.setPosition(latlng);
         },
 
-        updateGeolocation: function(latlng) {
+        updateGeolocation: function (latlng) {
             document.getElementById(geolocationId).value = latlng.lat() + "," + latlng.lng();
 
             // manually trigger a change event
-            var event = new Event('change', { bubbles: true });
+            var event = new Event('change', {bubbles: true});
             document.getElementById(geolocationId).dispatchEvent(event);
         }
     };
@@ -176,7 +177,7 @@ function googleMapAdmin() {
     return self;
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var googlemap = googleMapAdmin();
     googlemap.initialize();
 });
