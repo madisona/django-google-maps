@@ -28,7 +28,6 @@ jobs:
         run: python -m build
       - name: Publish to Pypi
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
         # This action handles building and publishing automatically
         # No need to manually run setup.py or twine
         # No secrets needed here for PyPI username/password
