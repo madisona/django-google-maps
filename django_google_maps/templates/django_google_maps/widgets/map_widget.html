@@ -1,2 +1,7 @@
-{% include "django/forms/widgets/text.html" %}
-<div class="map_canvas_wrapper"><div id="map_canvas"></div></div>
+<div class="map_widget_wrapper">
+    {% include "django/forms/widgets/text.html" %}
+    <div class="map_canvas_wrapper">
+        <div id="map_canvas"></div>
+    </div>
+    <div id="map_message_box" role="alert"></div>
+</div>
