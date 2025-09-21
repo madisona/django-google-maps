@@ -12,10 +12,6 @@ address, have the address geocoded on change and plotted on the map. If
 the location is not 100% correct, the user can drag the marker to the
 correct spot and the geo coordinates will update.
 
-Status
-~~~~~~
-
-|Build Status|
 
 USAGE:
 ------

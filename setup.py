@@ -33,6 +33,7 @@ setup(
     author_email="aaron.l.madison@gmail.com",
     description="Plugs google maps V3 api into Django admin.",
     long_description=LONG_DESCRIPTION,
+    long_description_content_type='text/x-rst',
     url="https://github.com/madisona/django-google-maps",
     packages=("django_google_maps",),
     include_package_data=True,
