@@ -1,3 +1,14 @@
+## [0.14.0] - 2025-09-21
+ - Big thanks to @RobKuipers - most of the improvements in this release were his contributions
+ - Fixed bug where `GeoLocationField` was always marked as "changed"
+ - Allow comparing `GeoPoint` object with string lat,lng
+ - Removed jQuery dependency, now straight javascript
+ - Added: Django 5.2 support
+ - Drop CI checks for Python 3.7 & 3.8
+ - Improved styling in Django admin for newer versions
+ - Updated to Google Maps AdvancedMarkerElement
+ - Load Google Maps Async
+
 ## [0.13.0] - 2022-03-22
  - Added: Django 4.0 support
  - Added: Python 3.10 support
